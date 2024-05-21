@@ -1,0 +1,111 @@
+.at-c {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-items: center;
+  justify-content: center;
+}
+
+.cr-ss {
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  border-style: none;
+  background-color: rgba(255, 0, 0, 0.373);
+  border-radius: 50px;
+  box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.5);
+  transition: 500ms;
+}
+
+.cr-ss:hover {
+  transition: 500ms;
+  background-color: rgba(255, 0, 0, 0.612);
+  box-shadow: 1px 1px 10px 5px #c8030394;
+}
+
+.bt-f {
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.5);
+  border-radius: 50px;
+  border-style: none;
+  transition: 500ms;
+  background-color: #0d1b2a;
+}
+
+.bt-f:hover {
+  transition: 500ms;
+  background-color: #415a77;
+  box-shadow: 1px 1px 10px 5px #0d1b2a;
+}
+
+.fl-c {
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+  justify-content: center;
+  align-items: center;
+}
+
+.a-nv {
+  width: 80%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.page-user-tasks {
+  text-align: center;
+  color: white;
+}
+
+.material-icons {
+  color: rgba(255, 255, 255, 1);
+}
+
+.tk-c-n {
+  margin: 10px;
+  padding: 10px;
+  width: 350px;
+  max-width: 400px;
+  min-height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: #0d1b2a;
+  color: #e0e1dd;
+  border-radius: 20px;
+  transition: 500ms;
+  box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.5);
+}
+
+.tk-c-n:hover {
+  box-shadow: 1px 1px 10px 5px #415a77;
+  transition: 500ms;
+}
+
+.cr-n-tk {
+  border-style: none;
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 200ms;
+  cursor: pointer;
+  width: 60px;
+  height: 60px;
+  transition: 200ms;
+  background-color: #778da9;
+}
+
+.cr-n-tk:hover {
+  background-color: #415a77;
+  transition: 200ms;
+}

@@ -1,0 +1,60 @@
+.tk-c {
+  margin: 10px;
+  padding: 10px;
+  width: 350px;
+  max-width: 400px;
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+  background-color: #0d1b2a;
+  color: #e0e1dd;
+  border-radius: 20px;
+  transition: 500ms;
+  cursor: pointer;
+  box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.5);
+}
+
+.tk-c:hover {
+  box-shadow: 1px 1px 10px 5px #415a77;
+  transition: 500ms;
+}
+
+.h-c {
+  margin-top: 10px;
+  height: 40px;
+  display: flex;
+  justify-content: space-around;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 20px;
+}
+
+.h-c h3 {
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.d-c {
+  margin-top: 10px;
+  height: 50%;
+  background-color: #0d1b2a;
+  border-radius: 20px;
+  padding: 20px;
+  text-align: left;
+  font-weight: bold;
+}
+
+.lt {
+  background-color: #415a77;
+  padding: 5px;
+  text-align: center;
+}
+
+.tt {
+  text-align: center;
+}
