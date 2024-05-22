@@ -1,20 +1,74 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Task from "../components/Task";
 import "../components/styles/UserTasks.css";
 import CUTask from "../components/CUTask";
 import CreateTask from "../components/CreateTask";
+import axios from "axios";
 
 function UserTasks() {
-  const [selectTask, setSelectTask] = useState([]);
-
+  const navigate = useNavigate();
+  const [selectTask, setSelectTask] = useState(null);
+  const [tasks, setTasks] = useState([]);
+  const [tasksFilter, setTasksFilter] = useState([]);
   const [viewTask, setViewTask] = useState(false);
+  const [createTask, setCreateTask] = useState(false);
+  const [refresh, setRefresh] = useState(false);
+  const [filter, setFilter] = useState(false);
+  const [searchLabel, setSeachLabel] = useState("");
 
-  const handleSelectTask = () => {
+  useEffect(() => {
+    const fetchUserTask = async () => {
+      const username = localStorage.getItem("username");
+      try {
+        const response = await axios.post(
+          "http://localhost:8000/all_user_tasks/",
+          {
+            username: username,
+          }
+        );
+        setTasks(response.data.tasks);
+      } catch (error) {
+        console.error("Error al obtener las tareas del usuario:", error);
+      }
+    };
+    fetchUserTask();
+  }, [refresh]);
+
+  const filterTask = () => {
+    const filteredTasks = tasks.filter((task) =>
+      task.label.includes(searchLabel)
+    );
+    setTasksFilter(filteredTasks);
+    setFilter(true);
+  };
+
+  const handleSelectTask = (task) => {
+    setSelectTask(task);
     setViewTask(true);
   };
 
+  const handleSearchLabel = (e) => {
+    setSeachLabel(e.target.value);
+  };
+
+  const handleCreateTask = () => {
+    setCreateTask(true);
+  };
+
+  const closeCreateTask = () => {
+    setCreateTask(false);
+    setRefresh(!refresh);
+  };
+
   const closeViewTask = () => {
+    setSelectTask(null);
     setViewTask(false);
+  };
+
+  const logout = () => {
+    localStorage.setItem("username", undefined);
+    navigate("/");
   };
 
   return (
@@ -24,61 +78,62 @@ function UserTasks() {
           <h1> Bienvenido {localStorage.getItem("username")} </h1>
           <div className="fl-c">
             <p>Filtrar</p>
-            <input className="i-n" placeholder="Etiqueta"></input>
-            <button className="bt-f">
+            <input
+              onChange={handleSearchLabel}
+              className="i-n"
+              placeholder="Etiqueta"
+            ></input>
+            <button onClick={filterTask} className="bt-f">
               <span className="material-icons">search</span>
             </button>
           </div>
-          <button className="cr-ss">
+          <button onClick={logout} className="cr-ss">
             <span className="material-icons">logout</span>
           </button>
         </div>
         {viewTask ? (
           <CUTask
             onClick={closeViewTask}
-            title={"Organizar habitacion"}
-            label={"Tareas del hogar"}
-            description={"Limpiar escritorio, organizar ropa, cambiar sabanas"}
+            title={selectTask.title}
+            label={selectTask.label}
+            description={selectTask.description}
           />
+        ) : createTask ? (
+          <CreateTask onClick={() => closeCreateTask()} />
+        ) : filter ? (
+          <div>
+            <h1>Busquedas encontradas con la etiqueta {searchLabel}</h1>
+            <div className="at-c">
+              {tasksFilter.map((task) => (
+                <Task
+                  key={task.id}
+                  title={task.title}
+                  label={task.label}
+                  description={task.description}
+                  onClick={() => handleSelectTask(task)}
+                />
+              ))}
+            </div>
+          </div>
         ) : (
           <div className="at-c">
             <div className="tk-c-n">
               <h3>Crea una nueva tarea</h3>
-              <button className="cr-n-tk">
+              <button onClick={handleCreateTask} className="cr-n-tk">
                 <span className="material-icons">add</span>
               </button>
             </div>
-            <Task
-              onClick={handleSelectTask}
-              title={"Organizar habitacion"}
-              label={"Tareas del hogar"}
-              description={
-                "Limpiar escritorio, organizar ropa, cambiar sabanas"
-              }
-            />
-            <Task
-              onClick={handleSelectTask}
-              title={"Estudiar parcial Simulacion"}
-              label={"Universidad"}
-              description={"Temas: redes neuronales, funciones de activacion"}
-            />
-            <Task
-              onClick={handleSelectTask}
-              title={"Ir de compras"}
-              label={"Tareas del hogar"}
-              description={"Ir al mercado a comprar vegetales y carne"}
-            />
-            <Task
-              onClick={handleSelectTask}
-              title={"Enviar informes cliente"}
-              label={"Trabajo"}
-              description={
-                "Enviar correo con informes organizados a el cliente Juan"
-              }
-            />
+            {tasks.map((task) => (
+              <Task
+                key={task.id}
+                title={task.title}
+                label={task.label}
+                description={task.description}
+                onClick={() => handleSelectTask(task)}
+              />
+            ))}
           </div>
         )}
-        <CreateTask />
       </div>
     </div>
   );

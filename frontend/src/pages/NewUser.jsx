@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "../components/styles/NewUser.css";
 import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function NewUser() {
   const navigate = useNavigate();
@@ -10,9 +11,17 @@ function NewUser() {
     setUsername(e.target.value);
   };
 
-  const startButton = (e) => {
-    localStorage.setItem("username", username);
-    navigate("/user_tasks");
+  const startButton = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post("http://localhost:8000/create_user/", {
+        username: username,
+      });
+      localStorage.setItem("username", username);
+      navigate("/user_tasks");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

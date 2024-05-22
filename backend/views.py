@@ -11,7 +11,9 @@ def create_user(request):
     username = request.data.get('username')
     
     if User.objects.filter(username=username).exists():
-        return Response({'Error': 'User already exists'}, status=status.HTTP_400_BAD_REQUEST)
+        user = get_object_or_404(User, username=username)
+        serializer = UserSerializer(user)
+        return Response({"user": serializer.data}, status=status.HTTP_200_OK)
     
     password = username + '123.'
     user = User.objects.create_user(username=username, password=password, email='')
@@ -20,7 +22,7 @@ def create_user(request):
     
     return Response({'user': serializer.data}, status=status.HTTP_201_CREATED)
 
-@api_view(['GET'])
+@api_view(['POST'])
 def all_user_tasks(request):
     username = request.data.get('username')
     user = get_object_or_404(User, username=username)

@@ -1,6 +1,23 @@
+import { useState } from "react";
 import "../components/styles/CUTask.css";
 
 function CUTask(props) {
+  const [title, setTitle] = useState(props.title);
+  const [label, setLabel] = useState(props.label);
+  const [description, setDescription] = useState(props.description);
+
+  const handleTitle = (e) => {
+    setTitle(e.target.value);
+  };
+
+  const handleLabel = (e) => {
+    setLabel(e.target.value);
+  };
+
+  const handleDescription = (e) => {
+    setDescription(e.target.value);
+  };
+
   return (
     <div className="c-v-tk">
       <div className="c-h-ab">
@@ -11,12 +28,12 @@ function CUTask(props) {
       </div>
       <div className="ab-tk-c">
         <div className="ab-h-c">
-          <input value={props.title} className="ab-tt" />
-          <input value={props.label} className="ab-lt" />
+          <input onChange={handleTitle} value={title} className="ab-tt" />
+          <input onChange={handleLabel} value={label} className="ab-lt" />
         </div>
         <div className="ab-d-c">
           <p>Descripcion:</p>
-          <textarea value={props.description} />
+          <textarea onChange={handleDescription} value={description} />
         </div>
       </div>
       <div className="c-bt-ab-tk">
