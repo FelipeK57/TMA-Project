@@ -42,7 +42,7 @@ def create_task(request):
     user = get_object_or_404(User, username=username)
     task = Task.objects.create(title=title, description=description, label=label, user=user)
     task.save()
-    
+        
     serializer = TaskSerializer(task)
     
     return Response({'task': serializer.data}, status=status.HTTP_201_CREATED)

@@ -36,8 +36,13 @@ function UserTasks() {
   }, [refresh]);
 
   const filterTask = () => {
-    const filteredTasks = tasks.filter((task) =>
-      task.label.includes(searchLabel)
+    if (searchLabel == "" || searchLabel == " ") {
+      return alert("No se ha ingresado una etiqueta");
+    }
+    const filteredTasks = tasks.filter(
+      (task) =>
+        task.label.includes(searchLabel) ||
+        task.label.toLowerCase().includes(searchLabel.toLowerCase())
     );
     setTasksFilter(filteredTasks);
     setFilter(true);
@@ -56,6 +61,10 @@ function UserTasks() {
     setCreateTask(true);
   };
 
+  const closeFilter = () => {
+    setFilter(false);
+  };
+
   const closeCreateTask = () => {
     setCreateTask(false);
     setRefresh(!refresh);
@@ -63,6 +72,7 @@ function UserTasks() {
 
   const closeViewTask = () => {
     setSelectTask(null);
+    setRefresh(!refresh);
     setViewTask(false);
   };
 
@@ -86,6 +96,11 @@ function UserTasks() {
             <button onClick={filterTask} className="bt-f">
               <span className="material-icons">search</span>
             </button>
+            {filter ? (
+              <button className="cr-ss" onClick={closeFilter}>
+                <span className="material-icons">close</span>
+              </button>
+            ) : null}
           </div>
           <button onClick={logout} className="cr-ss">
             <span className="material-icons">logout</span>

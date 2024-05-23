@@ -19,7 +19,7 @@ function CreateTask(props) {
       });
       alert("Tarea creada correctamente");
     } catch (error) {
-      console.log(error);
+      alert("ERROR DE EL SERVIDOR");
     }
   };
 
